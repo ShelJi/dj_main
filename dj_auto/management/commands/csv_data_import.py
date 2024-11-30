@@ -11,7 +11,9 @@ class Command(BaseCommand):
         
     def handle(self, *args, **kwargs) -> None:
         with open(kwargs["file_path"], 'r', encoding='utf-8-sig') as file:
+            
             datas = csv.DictReader(file)
+            
             for data in datas:
                 # print(data["age"])
                 # print(data["name"])
@@ -20,5 +22,5 @@ class Command(BaseCommand):
                     Student.objects.create(**data)
                 else:
                     self.stdout.write(self.style.WARNING(f"{data["rool_no"]} Rool no already exists"))
+                    
             self.stdout.write(self.style.SUCCESS("Datas imported"))
-                

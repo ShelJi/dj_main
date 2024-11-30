@@ -7,3 +7,9 @@ class Student(models.Model):
     
     def __str__(self) -> str:
         return self.name
+    
+class Teacher(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self) -> str:
+        return self.name
