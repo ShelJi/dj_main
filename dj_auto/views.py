@@ -3,9 +3,9 @@ from django.views import View
 from .utils import get_custom_models
 from .models import Uploads
 from django.conf import settings
-# from django.base.management import call_command
+from django.core.management import call_command
 from icecream import ic
-
+from django.contrib import messages
 
 class ImportData(View):
     def get(self, request):
@@ -24,8 +24,15 @@ class ImportData(View):
         
         actual_path = str(base_url) + str(relative_path)
         
-        print(actual_path)
+        try:
+            call_command("adddata_csv_specificmodel", actual_path, model_name)
+            messages.success(request, "Datas imported")
         
+        except Exception as e:
+            messages.error(request, str(e))
+            # raise e
+        
+        print(request._messages)
         
         models = get_custom_models()
         context = {"models" : models}

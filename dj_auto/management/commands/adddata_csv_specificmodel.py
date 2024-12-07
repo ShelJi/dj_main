@@ -46,6 +46,9 @@ class Command(BaseCommand):
         except Exception as e:
             raise CommandError(f"An error occurred: {str(e)}")
         
+        self.stdout.write(self.style.SUCCESS("wHATT????"))
+        
+        
         
 # import csv
 # from django.core.management.base import BaseCommand, CommandError
