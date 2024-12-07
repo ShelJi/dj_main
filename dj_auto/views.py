@@ -16,6 +16,17 @@ class ImportData(View):
     def post(self, request):
         file_path = request.FILES.get("file_path")
         model_name = request.POST.get("model_name")
-        Uploads.objects.create(uploaded_file=file_path, model_name=model_name)
+        upload = Uploads.objects.create(uploaded_file=file_path, model_name=model_name)
         
-        return render(request, "dj_auto/import_data.html")
+        # construct full path
+        relative_path = upload.uploaded_file.url
+        base_url = settings.BASE_DIR
+        
+        actual_path = str(base_url) + str(relative_path)
+        
+        print(actual_path)
+        
+        
+        models = get_custom_models()
+        context = {"models" : models}
+        return render(request, "dj_auto/import_data.html", context)
