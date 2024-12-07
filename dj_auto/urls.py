@@ -5,5 +5,5 @@ from . import views
 app_name = "dj_auto"
 
 urlpatterns = [
-    path("import-data/", views.import_data, name="import_data"),
+    path("import-data/", views.ImportData.as_view(), name="import_data"),
 ]

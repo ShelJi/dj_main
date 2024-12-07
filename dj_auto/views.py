@@ -1,5 +1,21 @@
 from django.shortcuts import render
+from django.views import View
+from .utils import get_custom_models
+from .models import Uploads
+from django.conf import settings
+# from django.base.management import call_command
+from icecream import ic
 
 
-def import_data(request):
-    return render(request, "dj_auto/import_data.html")
+class ImportData(View):
+    def get(self, request):
+        models = get_custom_models()
+        context = {"models" : models}
+        return render(request, "dj_auto/import_data.html", context)
+    
+    def post(self, request):
+        file_path = request.FILES.get("file_path")
+        model_name = request.POST.get("model_name")
+        Uploads.objects.create(uploaded_file=file_path, model_name=model_name)
+        
+        return render(request, "dj_auto/import_data.html")
